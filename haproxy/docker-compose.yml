@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  web1:
+    image: jmalloc/echo-server:latest
+    networks:
+      - developer
+  web2:
+    image: jmalloc/echo-server:latest
+    networks:
+      - developer
+  web3:
+    image: jmalloc/echo-server:latest
+    networks:
+      - developer
+  web4:
+    image: jmalloc/echo-server:latest
+    networks:
+      - developer
+  proxy:
+    image: haproxytech/haproxy-alpine:2.4
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    ports:
+      - "80:80"
+      - "8404:8404"
+      - "8181:8181"
+    depends_on:
+      - web1
+      - web2
+      - web3
+      - web4
+    networks:
+      - developer
+  
+networks:
+  developer:
+    ipam:
+      config:
+        - subnet: "172.28.1.0/26"
+          gateway: "172.28.1.1"

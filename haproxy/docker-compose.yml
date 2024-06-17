@@ -20,7 +20,7 @@ services:
   proxy:
     image: haproxytech/haproxy-alpine:2.4
     volumes:
-      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      - ./conf/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
     ports:
       - "80:80"
       - "8404:8404"
